@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoMapperApp\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorkFlowData\WorkFlowData.csproj" />
+    <ProjectReference Include="..\WorkFlowDominio\WorkFlowDominio.csproj" />
+    <ProjectReference Include="..\WorkFlowViewModel\WorkFlowViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MetodosComunsApi">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\MetodosComunsApi\bin\Debug\netcoreapp3.1\MetodosComunsApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Resources">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\Resources\bin\Debug\netcoreapp3.1\Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="SlnNotificacoesApi">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\SlnNotificacoesApi\bin\Debug\netcoreapp3.1\SlnNotificacoesApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Specifications">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\Specifications\bin\Debug\netcoreapp3.1\Specifications.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

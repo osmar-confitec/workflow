@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.3" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorkFlowDominio\WorkFlowDominio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MetodosComunsApi">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\MetodosComunsApi\bin\Debug\netcoreapp3.1\MetodosComunsApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Resources">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\Resources\bin\Debug\netcoreapp3.1\Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="SlnNotificacoesApi">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\SlnNotificacoesApi\bin\Debug\netcoreapp3.1\SlnNotificacoesApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Specifications">
+      <HintPath>..\..\..\..\..\devsfullproject-back-end-infraestrutura\src\Specifications\bin\Debug\netcoreapp3.1\Specifications.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

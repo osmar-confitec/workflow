@@ -1,0 +1,410 @@
+
+    pacotes para o identity 
+	
+	
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.1" />
+  </ItemGroup>
+
+	se cria a classe 
+	AspNetUser
+	
+	e referencia a interface iuser 
+	na camada de dominio
+
+	para ser utilizado em toda aplicação
+
+	depois adiciona o arquivo de traducao 
+	IdentityMensagensPortugues
+
+	adiciona o ApplicationDbContextIdentity
+	           e o DesignTimeDbContextFactory
+
+			   para rodar o migration do identity localmente
+			   é necessario atualizar o ef com o comando 
+			   dotnet tool uninstall --global dotnet-ef
+			   depois para a versao 3.0 atualize
+			   dotnet tool install --global dotnet-ef --version 3.1.0
+			   ou ultimas versões 
+
+
+			   depois utilize o migration dotnet ef migrations add InitialMigration 
+			   dotnet ef database update --verbose
+
+			   é adicionado os claim requeriment para as policys de acesso 
+			   			em startup 
+
+			         services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new ClaimRequirement("Customers", "Write")));
+                options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new ClaimRequirement("Customers", "Remove")));
+            });
+
+			em controllers
+
+			        [HttpDelete]
+        [Authorize(Policy = "CanRemoveCustomerData")]
+        [Route("customer-management")]
+        public IActionResult Delete(Guid id)
+        {
+            _customerAppService.Remove(id);
+            
+            return Response();
+        }
+
+		logo após crie a classe que gerará o token 
+		JwtTokenOptions
+
+		crie a strutura de dominio e dominio core 
+
+		em dominio core bus / commands / events / notifications
+
+		para adicionar o que o usuario pode ver ou não na tabela 
+		AspNetUserClaims
+
+		claimtype -> modulo
+		claimvalue ->acao
+		claimvalue pode colocar com virgula 
+
+
+
+
+
+
+    /*tag utilizada para incluir ou excluir de acordo com o ambiente */
+
+        <environment include="Development" >
+
+    </environment>
+
+    <environment exclude="Development" >
+
+    </environment>
+
+    <environment include="Development" >
+
+    </environment>
+
+    /*tag helper são marcações que auxiliam e muito o desenvolvimento*/
+
+        --asp-append-version
+     <script src="~/js/site.js" asp-append-version="true"></script>
+
+     view componentes são componentes com views próprias diferente das partial views que utilizam a model da pagina atual
+     temos as views imports que são views importando recursos globais
+
+     _ na frente das views significa que elas são complementares
+
+     
+
+     existem duas formas das partial views render e partial render exibe o resultado pronto partial renderiza junto com a view
+
+     utilizar tag helper
+     /*chamar a partial view sincrono*/
+     <partial name="_AvisoGeral" />
+
+      @await Html.PartialAsync("_AvisoGeral")
+
+
+      viewcomponent 
+
+         [ViewComponent(Name ="Carrinho")]
+    public class CarrinhoComprasViewComponent : ViewComponent
+    {
+
+        public int ItensCarrinho { get; set; }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+
+            return View(ItensCarrinho);
+        
+        }
+
+        public CarrinhoComprasViewComponent()
+        {
+            ItensCarrinho = 3;
+        }
+
+    }
+
+    criar na strutura de shared/components/CarrinhoCompras/Default.cshtml
+
+    nas view imports 
+
+
+    trabalhar com net core basico 
+
+    components 
+    http://ezzylearning.com/tutorial/creating-view-components-in-asp-net-core-3-1
+
+    varias informacoes de taghelpers 
+    https://www.learnrazorpages.com/
+
+    adicionar onubustrutive jquery para validar forms 
+
+    método de inicializacao
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+
+    novo recurso visual studio 2019 adicionar cliente side library  clicar com o direito adicionar biblioteca js 
+
+    asp-falback caso seu link não responda cai nesse
+
+
+    arquivo para minificar - bundleconfig.json
+    [
+	{
+
+		"outputFileName": "wwwroot/css/site_bundle.mim.css",
+		"inputFiles": [
+			"wwwroot/lib/bootstrap/css/bootstrap.css",
+			"wwwroot/css/site.css"
+		]
+	},
+	{
+
+		"outputFileName": "wwwroot/js/site_bundle.mim.js",
+		"inputFiles": [
+			"wwwroot/lib/jquery/jquery.js",
+			"wwwroot/js/site.js"
+		]
+	}
+]
+
+faca download do npm https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner
+
+exibir/outrasjanelas/taskrunnerexplorer é possivel configurar sempre após o build 
+
+adicionar o pacote
+BundlerMinifier 
+
+ao compilar ele vai procurar bundleconfig.json e minificar
+
+para se utilizar taghelper 
+use a convencao e importe tag helper
+
+TagHelper : TagHelper
+
+ public class EmailTagHelper : TagHelper
+    {
+        public EmailTagHelper():base()
+        {
+        }
+
+        public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName = "a";
+
+
+            return base.ProcessAsync(context, output);  
+        }
+
+    }
+    
+
+        output tag 
+        <email></email>
+        context -> contexto
+        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName = "a";
+
+            var content = await output.GetChildContentAsync();
+            var target = content.GetContent()+"@"+"desenvolvedor.io";
+            output.Attributes.SetAttribute("hreaf", "mailto:" + target);
+            output.Content.SetContent(target);
+            //return base.ProcessAsync(context, output);  
+        }
+
+        nao esqueca de incluir o namespace do projeto 
+        @addTagHelper *, SlnNetCoreBasicoWeb
+
+        é possivel passar parametrods 
+
+        
+    public class EmailTagHelper : TagHelper
+    {
+
+        public string EmailDomain { get; set; } = "desenvolvedor.io";
+
+        public EmailTagHelper():base()
+        {
+        }
+
+        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName = "a";
+
+            var content = await output.GetChildContentAsync();
+            var target = content.GetContent()+"@"+ EmailDomain;
+            output.Attributes.SetAttribute("hreaf", "mailto:" + target);
+            output.Content.SetContent(target);
+            //return base.ProcessAsync(context, output);  
+        }
+
+    }
+
+    <email>contato</email>
+
+<email email-domain="gmail.com" >contato</email>
+
+in visual studio 2019 add folder Areas
+and add area
+
+ao adicionar  a area deve adicionar a rota em startup 
+
+a ordem dos endpoints faz a diferença 
+primeiro declare a que tem area
+
+        app.UseEndpoints(endpoints =>
+            {
+
+             endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+               
+            });
+
+            é possivel criar areas fora da  convencao 
+
+       endpoints.MapAreaControllerRoute
+                (
+                    
+                    name:"AreaVendas",areaName: "Vendas",pattern: "Vendas/{controller=Pedidos}/{action=Index}/{id?}"
+                );
+
+           E utilizar no controller [Area(Vendas)]
+
+           onde pedidos é o inicial controler e index inicial view
+           
+           nas views 
+
+           é possivel utilizar areas 
+
+           adicionar identity no mvc core 
+           adicone a sua ui esse pacote => Install-Package microsoft.aspnetcore.Identity.UI
+
+           para adicionar novos itens clique com o botão direito em cima do projeto adicionar novos itens com scaffold
+
+           identidade selecione login e register 
+
+           é criado uma área para identity com as pages 
+
+           IdentityHostingStartup retirar 
+
+              builder.ConfigureServices((context, services) => {
+                //services.AddDbContext<CoreIdentityContext>(options =>
+                //    options.UseSqlServer(
+                //        context.Configuration.GetConnectionString("CoreIdentityContextConnection")));
+
+                //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                //    .AddEntityFrameworkStores<CoreIdentityContext>();
+            });
+
+            e colocar na startup
+
+                    // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+
+
+            services.AddControllersWithViews();
+
+            services.AddDbContext<CoreIdentityContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("CoreIdentityContextConnection")));
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<CoreIdentityContext>();
+        }
+
+        é criada uma con string 
+
+        {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "CoreIdentityContextConnection": "Server=(localdb)\\mssqllocaldb;Database=SlnNetCoreBasicoWeb;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}
+
+de config 
+
+pacotes que utilizam entity não podem utilizar por referencia
+
+
+
+
+  /* Adicionar claims é possivel adicionar roles com clains tipo role*/
+                //await _userManager.AddClaimsAsync(user, new List<Claim> {
+
+                //                new Claim(ClaimTypes.Email, user.Email),
+                //                new Claim(ClaimTypes.Role, "Cliente-Incluir"),
+                //                new Claim(ClaimTypes.Role, "Cliente-Alterar"),
+                //                new Claim(ClaimTypes.Role, "Cliente-Deletar"),
+                //                new Claim(ClaimTypes.Role, "Cliente-Consultar"),
+                //                new Claim("Cliente","Incluir"),
+                //                new Claim("Cliente","Alterar"),
+                //                new Claim("Cliente","Deletar")
+                //});
+
+
+                /*necessita das informações na tabela role papel*/
+                /*
+                await _userManager.AddToRolesAsync(user, new List<string> { "Cliente-Incluir" ,
+                                                                            "Cliente-Alterar" ,
+                                                                            "Cliente-Deletar",
+                                                                            "Cliente-Consultar" });
+                                                                            */
+
+
+
+
+
+
+
+
+
+
+
+
+
